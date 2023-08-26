@@ -10,7 +10,7 @@ pipeline{
 
                script{
 
-                git branch: 'main', url: 'https://github.com/Nelztacy/olowo-java-demo.git'
+                git branch: 'main', url: 'git@github.com:Nelztacy/olowo-java-demo.git'
                }
             }
         }
