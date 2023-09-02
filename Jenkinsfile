@@ -1,17 +1,19 @@
-pipeline{
-
+pipeline {
     agent any
-
-    stages{
-
-        stage('Git Checkout'){
-
-            steps{
-
-               script{
-
-                git branch: 'main', url: 'git@github.com:Nelztacy/olowo-java-demo.git'
-               }
+    stages {
+        stage("BUILD") {
+            steps {
+                echo "Building begins"
+            }
+        }
+        stage("TEST") {
+            steps {
+                echo "Testing begins"
+            }
+        }
+        stage("DEPLOY") {
+            steps {
+                echo "Deployment begins"
             }
         }
     }
