@@ -1,20 +1,26 @@
 pipeline {
-    agent any
-    stages {
-        stage("BUILD") {
-            steps {
-                echo "Building begins"
-            }
-        }
-        stage("TEST") {
-            steps {
-                echo "Testing begins"
-            }
-        }
-        stage("DEPLOY") {
-            steps {
-                echo "Deployment begins"
-            }
-        }
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
+    stage('Build') {
+      steps {
+        sh "mvn clean package"
+            }
+    }
+    stage('Unit test'){
+      steps {
+        sh "mvn test"
+      }
+    }
+    stage('Integration testing'){
+      steps{
+        sh 'mvn verify -DskipUnitTests'
+      }
+   }
+  }
 }
