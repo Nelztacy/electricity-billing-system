@@ -31,5 +31,20 @@ pipeline {
         sh 'mvn verify -DskipUnitTests'
       }
    }
-  }
+  stage('Publish') {
+        steps {
+          publishRelease(mavenCommon, pipelineCommon.keystoreCredentialsId, pipelineCommon.useInstall4J)
+        }
+      }
+      stage('Collect Distribution Files') {
+        steps {
+          collectDist(pipelineCommon.distFiles)
+        }
+      }
+      stage('Finish Release') {
+        steps {
+          finishRelease(env, mavenCommon, params.version, params.nextVersion)
+        }
+    }
 }
+  }
