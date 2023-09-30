@@ -7,17 +7,14 @@ pipeline {
         checkout scm
       }
     }
-     stage('SonarQube analysis') {
+    stage('build & SonarQube analysis') {
       steps {
-        script {
-          // requires SonarQube Scanner 5.0.1
-          scannerHome = tool 'SonarQube Scanner 5.0.1'
-        }
-        withSonarQubeEnv('SonarQube Scanner') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
+        withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
       }
     }
+    
     stage('Build') {
       steps {
         sh "mvn clean package"
