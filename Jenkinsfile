@@ -31,20 +31,11 @@ pipeline {
         sh 'mvn verify -DskipUnitTests'
       }
    }
-  stage('Publish') {
+  stage('Deploy artifacts to server') {
         steps {
-          publishRelease(mavenCommon, pipelineCommon.keystoreCredentialsId, pipelineCommon.useInstall4J)
+          no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
         }
-      }
-      stage('Collect Distribution Files') {
-        steps {
-          collectDist(pipelineCommon.distFiles)
-        }
-      }
-      stage('Finish Release') {
-        steps {
-          finishRelease(env, mavenCommon, params.version, params.nextVersion)
-        }
-    }
+    
 }
   }
+}
