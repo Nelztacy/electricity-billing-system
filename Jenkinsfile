@@ -31,11 +31,6 @@ pipeline {
         sh 'mvn verify -DskipUnitTests'
       }
    }
-     stage('Deploy artifacts to server') {
-        steps {
-          no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
-        }
-    
-}
+     
   }
 }
