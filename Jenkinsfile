@@ -1,42 +1,36 @@
 pipeline {
-  agent any
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-    stage ('SAST') {
-		steps {
-		withSonarQubeEnv('sonar') {
-			sh 'mvn sonar:sonar'
-			sh 'cat target/sonar/report-task.txt'
-		       }
-		}
-	}
+    agent any
     
-    stage('Build') {
-      steps {
-        sh "mvn clean package"
-            }
-    }
-    stage('Unit test'){
-      steps {
-        sh "mvn test"
-      }
-    }
-    stage('Integration testing'){
-      steps{
-        sh 'mvn verify -DskipUnitTests'
-      }
-   }
-    stage ('Deploy-To-Tomcat') {
+    stages {
+        stage('Checkout') {
             steps {
-           sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat@10.0.0.101:/home/tomcat/usr/libexec/tomcat9/webapps/webapp.jar'
-              }     
-           }      
-    } 
-  }
+                // Checkout your source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Build your web application (e.g., compile code, package into a WAR file)
+                sh 'mvn clean package'  // Assuming you're using Maven to build
+            }
+        }
+        
+        stage('Deploy to Tomcat') {
+            steps {
+                // Copy the WAR file to the Tomcat webapps directory
+                sh "cp target/your-web-app.war /path/to/tomcat/webapps/"
+                
+                // Restart Tomcat to deploy the application
+                sh "/path/to/tomcat/bin/shutdown.sh"
+                sh "/path/to/tomcat/bin/startup.sh"
+            }
+        }
+    }
+    
+    post {
+        success {
+            // Notify on successful deployment, run additional steps, etc.
+        }
+    }
 }
