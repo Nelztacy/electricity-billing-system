@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        TOMCAT_HOME = '/path/to/tomcat'  // Set the path to your Tomcat installation
-        APP_NAME = 'your-app-name'        // Set your application name
+        TOMCAT_HOME = '/opt/tomcat'  // Set the path to your Tomcat installation
+        APP_NAME = 'BGE'        // Set your application name
     }
     
     stages {
@@ -27,10 +27,10 @@ pipeline {
                 sh "${TOMCAT_HOME}/bin/shutdown.sh"
                 
                 // Remove the existing application files
-                sh "rm -rf ${TOMCAT_HOME}/webapps/${APP_NAME}*"
+                sh "rm -rf ${TOMCAT_HOME}/webapps/${BGE}*"
                 
                 // Copy the JAR file to the webapps directory
-                sh "cp target/your-app-name.jar ${TOMCAT_HOME}/webapps/${APP_NAME}.jar"
+                sh "cp target/your-app-name.jar ${TOMCAT_HOME}/webapps/${BGE}.jar"
                 
                 // Start the Tomcat server
                 sh "${TOMCAT_HOME}/bin/startup.sh"
