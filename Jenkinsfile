@@ -20,6 +20,12 @@ pipeline {
       steps {
         sh "mvn clean package"
             }
+            post{
+                success{
+                    echo "Archiving the Artifacts"
+                    archiveArtifacts artifacts: "**/target/*.jar"
+                }
+            }
     }
     stage('Unit test'){
       steps {
@@ -31,6 +37,10 @@ pipeline {
         sh 'mvn verify -DskipUnitTests'
       }
    }
-     
+      stage('Deploy artifacts to Tomcat-Server'){
+      steps{
+        no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
+      }
+   }
   }
 }
