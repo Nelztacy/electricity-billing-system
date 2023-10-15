@@ -18,6 +18,14 @@ pipeline {
 		       }
 		}
 	}
+    stage ('Check-Git-Secrets') {
+	    steps {
+	        sh 'rm trufflehog || true'
+		    sh 'docker pull gesellix/trufflehog'
+		    sh 'docker run -t gesellix/trufflehog --json https://github.com/Nelztacy/electricity-billing-system.git > trufflehog'
+		    sh 'cat trufflehog'
+	    }
+    }
     
 //     stage('Build') {
 //       steps {
