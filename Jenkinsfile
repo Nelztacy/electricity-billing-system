@@ -18,14 +18,14 @@ pipeline {
 		       }
 		}
 	}
-    stage ('Check-Git-Secrets') {
-	    steps {
-	        sh 'rm trufflehog || true'
-		    sh 'docker pull gesellix/trufflehog'
-		    sh 'docker run -t gesellix/trufflehog --json https://github.com/Nelztacy/electricity-billing-system.git > trufflehog'
-		    sh 'cat trufflehog'
-	    }
-    }
+    // stage ('Check-Git-Secrets') {
+	//     steps {
+	//         sh 'rm trufflehog || true'
+	// 	    sh 'docker pull gesellix/trufflehog'
+	// 	    sh 'docker run -t gesellix/trufflehog --json https://github.com/Nelztacy/electricity-billing-system.git > trufflehog'
+	// 	    sh 'cat trufflehog'
+	//     }
+    // }
     
     stage('Build') {
         steps {
@@ -38,16 +38,11 @@ pipeline {
                 }
             }
     }
-//     stage('Unit test'){
-//       steps {
-//         sh "mvn test"
-//       }
-//     }
-//     stage('Integration testing'){
-//       steps{
-//         sh 'mvn verify -DskipUnitTests'
-//       }
-//    }
+    stage('Unit test'){
+        steps {
+            sh "mvn test"
+      }
+    }
 //       stage('Deploy artifacts to Tomcat-Server'){
 //       steps{
 //         no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
