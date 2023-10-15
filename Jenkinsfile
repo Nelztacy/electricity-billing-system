@@ -43,6 +43,15 @@ pipeline {
             sh "mvn test"
       }
     }
+    stage ('Source-Composition-Analysis') {
+	    steps {
+		     sh 'rm owasp-* || true'
+		     sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/owasp-dependency-check.sh'	
+		     sh 'chmod +x owasp-dependency-check.sh'
+		     sh 'bash owasp-dependency-check.sh'
+		     sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+		}
+	}
 //       stage('Deploy artifacts to Tomcat-Server'){
 //       steps{
 //         no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
