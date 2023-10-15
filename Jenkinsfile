@@ -27,17 +27,17 @@ pipeline {
 	    }
     }
     
-//     stage('Build') {
-//       steps {
-//         sh "mvn clean package"
-//             }
-//             post{
-//                 success{
-//                     echo "Archiving the Artifacts"
-//                     archiveArtifacts artifacts: "**/target/*.jar"
-//                 }
-//             }
-//     }
+    stage('Build') {
+        steps {
+            sh "mvn clean package"
+                }
+                post{
+                success{
+                    echo "Archiving the Artifacts"
+                    archiveArtifacts artifacts: "**/target/*.jar"
+                }
+            }
+    }
 //     stage('Unit test'){
 //       steps {
 //         sh "mvn test"
