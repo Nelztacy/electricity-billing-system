@@ -10,7 +10,7 @@ pipeline {
         checkout scm
       }
     }
-    stage ('SAST') {
+    stage ('Static Application Security Testing = SAST') {
 		steps {
 		withSonarQubeEnv('sonar') {
 			sh 'mvn sonar:sonar'
@@ -18,6 +18,14 @@ pipeline {
 		       }
 		}
 	}
+    stage ('Deploy-To-Tomcat') {
+        steps {
+        sshagent(['root']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.war root@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/webapp.war'
+              }     
+           }      
+    }
+	
     // stage ('Check-Git-Secrets') {
 	//     steps {
 	//         sh 'rm trufflehog || true'
@@ -27,7 +35,7 @@ pipeline {
 	//     }
     // }
     
-    stage('Build') {
+    stage('Build Artifact') {
         steps {
             sh "mvn clean package"
                 }
