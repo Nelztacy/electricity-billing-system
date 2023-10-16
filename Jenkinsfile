@@ -18,13 +18,7 @@ pipeline {
 		       }
 		}
 	}
-    stage ('Deploy-To-Tomcat') {
-        steps {
-        sshagent(['jenkins']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/webapp.war'
-              }     
-           }      
-    }
+    
 	
     // stage ('Check-Git-Secrets') {
 	//     steps {
@@ -60,10 +54,12 @@ pipeline {
 		     sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
 		}
 	}
-//       stage('Deploy artifacts to Tomcat-Server'){
-//       steps{
-//         no public field ‘deployer’ (or getter method) found in class org.jfrog.hudson.pipeline.scripted.steps.DeployStep
-//       }
-//    }
+    stage ('Deploy-To-Tomcat') {
+        steps {
+        sshagent(['jenkins']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/webapp.jar'
+              }     
+           }      
+    }
   }
 }
