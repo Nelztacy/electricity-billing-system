@@ -54,26 +54,26 @@ pipeline {
 		     sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
 		}
 	}
-    // stage ('Deploy-To-Tomcat') {
-    //     steps {
-    //     sshagent(['jenkins']) {
-    //             sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/'
-    //           }     
-    //        }      
-    // }
-    // stage('Copy JAR to Tomcat') {
-    //     steps {
-    //             script {
-    //                 def remoteHost = '10.0.0.101'
-    //                 def remoteUser = 'jenkins'
-    //                 def remoteDir = '/opt/tomcat/apache-tomcat-10.1.13/webapps/'
-    //                 def jarFileName = '*.jar'
-    //                 def localFilePath = "/var/lib/jenkins/workspace/electricity-billing-system/target/${jarFileName}"
+    stage ('Deploy-To-Tomcat') {
+        steps {
+        sshagent(['jenkins']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/'
+              }     
+           }      
+    }
+    stage('Copy JAR to Tomcat') {
+        steps {
+                script {
+                    def remoteHost = '10.0.0.101'
+                    def remoteUser = 'jenkins'
+                    def remoteDir = '/opt/tomcat/apache-tomcat-10.1.13/webapps/'
+                    def jarFileName = '*.jar'
+                    def localFilePath = "/var/lib/jenkins/workspace/electricity-billing-system/target/${jarFileName}"
                     
-    //                 sh "scp ${localFilePath} ${remoteUser}@${remoteHost}:${remoteDir}"
-    //             }
-    //         }
-    //     }
+                    sh "scp ${localFilePath} ${remoteUser}@${remoteHost}:${remoteDir}"
+                }
+            }
+        }
     stage ('Port Scan') {
 		    steps {
 			sh 'rm nmap* || true'
