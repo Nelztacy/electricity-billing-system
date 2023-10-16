@@ -57,7 +57,7 @@ pipeline {
     stage ('Deploy-To-Tomcat') {
         steps {
         sshagent(['solar']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.111:/opt/tomcat/webapps/'
+                sh 'scp -o StrictHostKeyChecking=no target/*.jar solar@10.0.0.111:/opt/tomcat/webapps/'
               }     
            }      
     }
