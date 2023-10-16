@@ -57,9 +57,12 @@ pipeline {
     stage ('Deploy-To-Tomcat') {
         steps {
         sshagent(['jenkins']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/webapp.jar'
+                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/'
               }     
            }      
     }
   }
 }
+
+
+// /var/lib/jenkins/workspace/electricity-billing-system/target
