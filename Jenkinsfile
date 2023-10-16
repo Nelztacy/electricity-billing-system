@@ -56,17 +56,17 @@ pipeline {
 	}
     stage ('Deploy-To-Tomcat') {
         steps {
-        sshagent(['jenkins']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.101:/opt/tomcat/apache-tomcat-10.1.13/webapps/'
+        sshagent(['solar']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.jar jenkins@10.0.0.111:/opt/tomcat/webapps/'
               }     
            }      
     }
     stage('Copy JAR to Tomcat') {
         steps {
                 script {
-                    def remoteHost = '10.0.0.101'
-                    def remoteUser = 'jenkins'
-                    def remoteDir = '/opt/tomcat/apache-tomcat-10.1.13/webapps/'
+                    def remoteHost = '10.0.0.111'
+                    def remoteUser = 'solar'
+                    def remoteDir = '/opt/tomcat/webapps/'
                     def jarFileName = '*.jar'
                     def localFilePath = "/var/lib/jenkins/workspace/electricity-billing-system/target/${jarFileName}"
                     
@@ -77,14 +77,14 @@ pipeline {
     stage ('Port Scan') {
 		    steps {
 			sh 'rm nmap* || true'
-			sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 10.0.0.101'
+			sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 10.0.0.111'
 			sh 'cat nmap'
 		    }
 	    }
     stage ('DAST') {
 		    steps {
 			    sshagent(['jenkins']) {
-			        sh 'ssh -o StrictHostKeyChecking=no jenkins@10.0.0.101 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://10.0.0.101:8080/" || true'
+			        sh 'ssh -o StrictHostKeyChecking=no jenkins@10.0.0.111 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://10.0.0.111:8080/" || true'
 			    }
 			}
 		} 
