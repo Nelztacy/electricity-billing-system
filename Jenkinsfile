@@ -81,6 +81,13 @@ pipeline {
 			sh 'cat nmap'
 		    }
 	    }
+    stage ('DAST') {
+		    steps {
+			    sshagent(['jenkins']) {
+			        sh 'ssh -o StrictHostKeyChecking=no jenkins@10.0.0.101 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://10.0.0.101:8080/" || true'
+			    }
+			}
+		} 
     }
   }
 
