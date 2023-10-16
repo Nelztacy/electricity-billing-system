@@ -61,9 +61,8 @@ pipeline {
     //           }     
     //        }      
     // }
-    stages {
-        stage('Copy JAR to Tomcat') {
-            steps {
+    stage('Copy JAR to Tomcat') {
+        steps {
                 script {
                     def remoteHost = '10.0.0.101'
                     def remoteUser = 'jenkins'
@@ -77,7 +76,6 @@ pipeline {
         }
     }
   }
-}
 
 
 // /var/lib/jenkins/workspace/electricity-billing-system/target
