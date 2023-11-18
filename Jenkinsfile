@@ -1,5 +1,5 @@
 pipeline {
-  agent linux-agent1
+  agent any
   tools{
     maven "Maven"
   }
