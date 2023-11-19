@@ -96,5 +96,15 @@ pipeline {
                 }
             }
         }
+        stage('Push image to DockerHub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'docker', variable: 'docker')]) {
+                   sh 'docker login -u nelzone -p ${docker}'
+        }
+                   sh 'docker push nelzone/electricity'
+                }
+            }
+        }
     }
   }
