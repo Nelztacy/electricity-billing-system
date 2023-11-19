@@ -88,5 +88,13 @@ pipeline {
 			    }
 			}
 		} 
+    stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker rmi nelzone/electricity'
+                    sh 'docker build -t nelzone/electricity .'
+                }
+            }
+        }
     }
   }
