@@ -90,6 +90,3 @@ pipeline {
 		} 
     }
   }
-
-
-// /var/lib/jenkins/workspace/electricity-billing-system/target
