@@ -19,8 +19,6 @@ spec:
         image: nelzone/electricity
         ports:
         - containerPort: 3000
-        
-        
 ---
 
 apiVersion: v1
