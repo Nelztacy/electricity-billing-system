@@ -94,27 +94,27 @@ pipeline {
 			    }
 			}
 		} 
-    stage('Build docker image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
-        }
-      }
-    }
-    // stage('Build docker image'){
-    //         steps{
-    //             script{
-    //                 sh 'docker build -t nelzone/electricity .'
-    //             }
-    //         }
+    // stage('Build docker image') {
+    //   steps{
+    //     script {
+    //       dockerImage = docker.build dockerimagename
     //     }
+    //   }
+    // }
+    stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t nelzone/electricity:latest .'
+                }
+            }
+        }
     //     stage('Push image to DockerHub'){
     //         steps{
     //             script{
     //                withCredentials([string(credentialsId: 'docker', variable: 'docker')]) {
     //                sh 'docker login -u nelzone -p ${docker}'
     //     }
-    //                sh 'docker push nelzone/electricity'
+    //                sh 'docker push nelzone/electricity:latest'
     //             }
     //         }
     //     }
