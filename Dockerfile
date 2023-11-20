@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /target
+WORKDIR /target/
 
 COPY package*.jar ./
 
