@@ -1,4 +1,10 @@
 pipeline {
+
+    environment {
+    dockerimagename = "Nelztacy/electricity"
+    dockerImage = ""
+  }
+
   agent any
   tools{
     maven "Maven"
@@ -88,6 +94,13 @@ pipeline {
 			    }
 			}
 		} 
+    stage('Build docker image') {
+      steps{
+        script {
+          dockerImage = docker.build dockerimagename
+        }
+      }
+    }
     // stage('Build docker image'){
     //         steps{
     //             script{
