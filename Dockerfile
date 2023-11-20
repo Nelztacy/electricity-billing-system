@@ -2,7 +2,7 @@ FROM node:16
 
 WORKDIR /target/
 
-COPY package*.jar ./
+COPY ${JAR_FILE} electricity.jar
 
 RUN npm install
 
